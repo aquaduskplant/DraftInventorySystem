@@ -23,16 +23,22 @@ class ProfileController extends Controller
 
     /**
      * Update the user's profile information.
+     * 
+     * SECURITY: Role cannot be changed through profile update
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        // SECURITY: Only update allowed fields, explicitly exclude role
+        $user = $request->user();
+        $user->name = $request->validated()['name'];
+        $user->email = $request->validated()['email'];
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        // Role is never updated through profile - prevent privilege escalation
+        $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }

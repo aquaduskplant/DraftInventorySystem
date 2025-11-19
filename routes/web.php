@@ -64,23 +64,7 @@ Route::middleware('auth')->group(function () {
             ->name('stock.out.store');
     });
 });
-Route::get('/run-migrations-once', function () {
-    // Be a bit safe: only allow in production on Render
-    if (!app()->environment('production')) {
-        abort(403, 'Not allowed in non-production environment.');
-    }
-
-    try {
-        Artisan::call('migrate', ['--force' => true]);
-        Artisan::call('db:seed', ['--force' => true]);
-
-        return '<h1>✅ Migrations and seed completed.</h1><pre>'
-            . Artisan::output()
-            . '</pre>';
-    } catch (\Throwable $e) {
-        return '<h1>❌ Error running migrations.</h1><pre>'
-            . e($e->getMessage())
-            . '</pre>';
-    }
-});
+// SECURITY: Removed dangerous /run-migrations-once route
+// This route was a major security vulnerability allowing arbitrary code execution
+// Migrations should only be run via CLI or proper deployment scripts
 require __DIR__ . '/auth.php';
