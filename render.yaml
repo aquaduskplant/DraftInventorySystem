@@ -1,0 +1,54 @@
+services:
+  - type: web
+    name: draft-inventory-system
+    runtime: php
+    plan: starter
+    buildCommand: ./render-build.sh
+    startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: draft-inventory-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: draft-inventory-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: draft-inventory-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: draft-inventory-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: draft-inventory-db
+          property: password
+      - key: CACHE_DRIVER
+        value: file
+      - key: SESSION_DRIVER
+        value: database
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: FILESYSTEM_DISK
+        value: local
+
+databases:
+  - name: draft-inventory-db
+    plan: starter
+    databaseName: draft_inventory
+    user: draft_user
+    # Note: Render defaults to PostgreSQL. If you need MySQL, change the database type in Render dashboard
+
