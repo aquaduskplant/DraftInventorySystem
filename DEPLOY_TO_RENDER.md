@@ -37,12 +37,12 @@ Follow these steps to deploy your Laravel application to Render.
 4. Click **"Create Database"**
 5. **Wait for the database to be created** (takes 1-2 minutes)
 6. **Note down the connection details** - you'll need them later:
-   - Internal Database URL
-   - Host
-   - Port
-   - Database name
-   - Username
-   - Password
+   - Internal Database URL = postgresql://draft_user:vf11a5iIkc8BkwmswqHcniFFqFg2IVkr@dpg-d4lgj2i4d50c73e2u4g0-a/draft_inventory
+   - Host = dpg-d4lgj2i4d50c73e2u4g0-a
+   - Port = 5432
+   - Database name = draft_inventory
+   - Username = draft_user
+   - Password = vf11a5iIkc8BkwmswqHcniFFqFg2IVkr
 
 ## Step 4: Create the Web Service
 
